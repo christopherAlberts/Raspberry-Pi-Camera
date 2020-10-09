@@ -15,7 +15,7 @@ running = True
 recording = False
 
 # use this to set the resolution if you dislike the default values
-# picam.resolution = (1024, 768)
+picam.resolution = (1024, 768)
 
 def picture():
     timestamp = datetime.now()
@@ -39,10 +39,11 @@ def video_stop():
 
 def kill_camera():
     picam.stop_preview()
-    print('End')
+    print('End due to kill_camera()')
     running = False
     
     # The following code will shutdown the Raspberry Pi
+    #print('Shutting down Raspberry Pi...')
     #call("sudo shutdown -h now", shell=True)
     
     #The following code will terminate the program
@@ -65,5 +66,8 @@ try:
         
 # we detect Ctrl+C then quit the program
 except KeyboardInterrupt:
+    print('End due to KeyboardInterrupt')
     picam.stop_preview()
     running = False
+    
+
