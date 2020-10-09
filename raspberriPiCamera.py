@@ -8,7 +8,7 @@ from subprocess import call
 
 takePhoto = Button(21)
 takeVideo = Button(20)
-KillAndShutdown = Button(26)
+killAndShutdown = Button(26)
 
 picam = picamera.PiCamera()
 running = True
@@ -37,7 +37,7 @@ def video_stop():
     picam.stop_recording()
     time.sleep(1)
 
-def Kill_camera():
+def kill_camera():
     picam.stop_preview()
     print('End')
     running = False
@@ -60,11 +60,10 @@ try:
             video_start()
         elif (takeVideo.is_pressed and recording == True):
             video_stop()
-
-        KillAndShutdown.when_pressed = Kill_camera
+        elif (killAndShutdown.is_pressed):
+            kill_camera()
         
 # we detect Ctrl+C then quit the program
 except KeyboardInterrupt:
     picam.stop_preview()
     running = False
-    
