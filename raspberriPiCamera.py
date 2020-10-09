@@ -39,7 +39,7 @@ def video_stop():
 
 def kill_camera():
     picam.stop_preview()
-    print('End due to kill_camera()')
+    print('End program due to kill_camera()')
     running = False
     
     # The following code will shutdown the Raspberry Pi
@@ -66,7 +66,7 @@ try:
         
 # we detect Ctrl+C then quit the program
 except KeyboardInterrupt:
-    print('End due to KeyboardInterrupt')
+    print('End program due to KeyboardInterrupt')
     picam.stop_preview()
     running = False
     
