@@ -27,7 +27,8 @@ fm = logFileLocation + 'log' + str(datetime.now()) + '.txt'
 logging.basicConfig(filename=fm, filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
 # use this to set the resolution if you dislike the default values
-#picam.resolution = (1024, 768)
+# picam.resolution = (1024, 768)
+picam.resolution = (500, 500)
 
 def picture():
     timestamp = datetime.now()
@@ -46,6 +47,7 @@ def video_stop():
     global recording
     recording = False
     picam.stop_recording()
+    timestamp = datetime.now()
     logging.info(str(timestamp) + ' - Video stoped ')
     time.sleep(1)
 
@@ -82,6 +84,8 @@ except KeyboardInterrupt:
     logging.warning(str(timestamp) + ' - End program due to KeyboardInterrupt')
     picam.stop_preview()
     running = False
+    
+
     
 
     
