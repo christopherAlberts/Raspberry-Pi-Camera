@@ -4,6 +4,7 @@ from gpiozero import Button
 import picamera
 import time
 import sys
+import logging
 from subprocess import call
 
 takePhoto = Button(21)
@@ -14,32 +15,44 @@ picam = picamera.PiCamera()
 running = True
 recording = False
 
+# Location where files will be stored:
+# Please ensure these folderd exsist before
+# running this script
+pictureLocation = '/home/pi/Camera/Picture/'
+videoLocation = '/home/pi/Camera/Video/'
+logFileLocation = '/home/pi/Camera/Log/'
+
+# Setup logging so it logs to a file in logFileLocation:
+fm = logFileLocation + 'log' + str(datetime.now()) + '.txt'
+logging.basicConfig(filename=fm, filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+
 # use this to set the resolution if you dislike the default values
-picam.resolution = (1024, 768)
+#picam.resolution = (1024, 768)
 
 def picture():
     timestamp = datetime.now()
-    picam.capture('/home/pi/Camera/Picture/pic' + str(timestamp) + '.jpg')  # taking the picture
-    print('Taking photo')
+    picam.capture(pictureLocation + 'pic' + str(timestamp) + '.jpg')  # taking the picture
+    logging.info(str(timestamp) + ' - Taking photo')
     
 def video_start():
     global recording
     recording = True
     timestamp = datetime.now()
-    print('Video recording...')
-    picam.start_recording('/home/pi/Camera/Video/video' + str(timestamp) + '.h264')
+    picam.start_recording(videoLocation + 'video' + str(timestamp) + '.h264')
+    logging.info(str(timestamp) + ' - Video recording...')
     time.sleep(1)
         
 def video_stop():
     global recording
     recording = False
-    print('Video stoped')
     picam.stop_recording()
+    logging.info(str(timestamp) + ' - Video stoped ')
     time.sleep(1)
 
 def kill_camera():
+    timestamp = datetime.now()
     picam.stop_preview()
-    print('End program due to kill_camera()')
+    logging.info(str(timestamp) + ' - End program due to kill_camera()')
     running = False
     
     # The following code will shutdown the Raspberry Pi
@@ -53,7 +66,6 @@ picam.start_preview()  # running the preview
 
 try:
     while running:
-        #print('Active')  # displaying 'active' to the shell
 
         if (takePhoto.is_pressed):
             picture()
@@ -66,8 +78,11 @@ try:
         
 # we detect Ctrl+C then quit the program
 except KeyboardInterrupt:
-    print('End program due to KeyboardInterrupt')
+    timestamp = datetime.now()
+    logging.warning(str(timestamp) + ' - End program due to KeyboardInterrupt')
     picam.stop_preview()
     running = False
+    
+
     
 
