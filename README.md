@@ -14,3 +14,7 @@ Thanks to a Raspberry Pi Circuit Board and some Python code, I was uble to build
 ![](4.jpg)
 
 ![](5.jpg)
+
+![](6.jpg)
+
+![](7.jpg)
