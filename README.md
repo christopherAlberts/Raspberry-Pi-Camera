@@ -15,6 +15,6 @@ Thanks to a Raspberry Pi Circuit Board and some Python code, I was uble to build
 
 ![](5.jpg)
 
-![](6.HEIC)
+![](6.jpg)
 
-![](7.HEIC)
+![](7.jpg)
